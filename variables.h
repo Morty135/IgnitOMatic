@@ -4,9 +4,6 @@
 #include <Arduino.h>
 
 extern int threshold;
-
-extern unsigned long lastPulseTime;
-extern unsigned long pulseInterval;
 extern unsigned long pulseWidth;
 
 #define MAP_SIZE 10
