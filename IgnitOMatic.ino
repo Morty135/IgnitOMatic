@@ -23,6 +23,12 @@ void setup()
 
 void loop() 
 {
+  if (Serial.available()) 
+  {
+    String cmd = Serial.readStringUntil('\n');
+    handleCommand(cmd);
+  }
+  
   int analogVal = analogRead(coilInputPin);
   bool isHigh = analogVal > threshold;
 
