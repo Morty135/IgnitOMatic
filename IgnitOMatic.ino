@@ -1,4 +1,5 @@
 #include "variables.h"
+#include "EEPROM.h"
 
 const int coilInputPin = A1;
 const int ignitionPin = 2;

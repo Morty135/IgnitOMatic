@@ -31,3 +31,10 @@ SET <variable_name> <index> <value>
 ```text
 SET threshold 300          // Set the threshold value to 300
 SET angleMap 3 15          // Set angleMap[3] to 15
+
+
+## Roadmap
+
+- use the EEPROM to store the map (https://docs.arduino.cc/learn/built-in-libraries/eeprom/)
+- use wireless module to update the map values
+- make a UI app to wirelessly update the maps
