@@ -30,7 +30,8 @@ void setup()
   pinMode(ignitionPin, OUTPUT);
   digitalWrite(ignitionPin, LOW);
 
-  attachInterrupt(digitalPinToInterrupt(inputPin), inputDetected, RISING);
+  attachInterrupt(digitalPinToInterrupt(inputPin), inputDetected, FALLING);
+  loadVariables();
 }
 
 
