@@ -20,6 +20,7 @@ Adjust ignition parameters live over a Serial connection — no need to reflash 
 The tables are a fixed lenght of 20 stored in EEPROM. To update them use serial command:
 ```text
 SET_VARIABLES:<1 value for impulse>,<20 values for RPM>,<20 valuses for angle>
+```
 
 ---
 
