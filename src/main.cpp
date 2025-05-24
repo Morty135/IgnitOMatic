@@ -23,6 +23,18 @@ void inputDetected()
 
 
 
+float getAdvance(float rpm) {
+  for (int i = 0; i < tableLength - 1; i++) {
+    if (rpm >= rpmBins[i] && rpm < rpmBins[i + 1]) {
+      float t = (rpm - rpmBins[i]) / (rpmBins[i + 1] - rpmBins[i]);
+      return advanceBins[i] + t * (advanceBins[i + 1] - advanceBins[i]);
+    }
+  }
+  return advanceBins[tableLength - 1]; // return highest if rpm is too high
+}
+
+
+
 void setup() 
 {
   Serial.begin(9600);
@@ -51,11 +63,25 @@ void loop()
     newPulse = false;
     interrupts();  // Re-enable interrupts
 
-    if (interval > 0) 
-    {
-      digitalWrite(ignitionPin, HIGH);
-      delayMicroseconds(pulseLength); 
-      digitalWrite(ignitionPin, LOW);
-    }
+    // 1. Calculate RPM
+    float rpm = 60000000.0 / interval;
+
+    // Get desired advance angle from map
+    float advanceAngle = getAdvance(rpm); // in degrees BTDC
+
+    // Convert angle to microseconds delay
+    float delayTime = (advanceAngle * 1000000.0) / (rpm * 6.0); // delay in microseconds
+
+    // Delay and fire ignition
+    delayMicroseconds((unsigned long)delayTime);
+
+    digitalWrite(ignitionPin, HIGH);
+    delayMicroseconds(pulseLength); 
+    digitalWrite(ignitionPin, LOW);
+
+    // Serial Debug
+    Serial.print("RPM: "); Serial.print(rpm);
+    Serial.print(" | Advance: "); Serial.print(advanceAngle);
+    Serial.print("° BTDC | Delay: "); Serial.print(delayTime); Serial.println(" µs");
   }
 }
